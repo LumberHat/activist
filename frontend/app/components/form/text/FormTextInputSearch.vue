@@ -10,9 +10,7 @@
   >
     <template #icons>
       <slot name="icons"></slot>
-      <button :id="`${id}-search`" :aria-label="ariaLabel" type="button">
-        <Icon :name="IconMap.SEARCH" size="1.4em" />
-      </button>
+      <Icon :name="IconMap.SEARCH" size="1.4em" />
     </template>
   </FormTextInput>
 </template>

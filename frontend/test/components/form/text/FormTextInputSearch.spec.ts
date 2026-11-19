@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/vue";
 import { describe, expect, it, vi } from "vitest";
 
 import FormTextInputSearch from "../../../../app/components/form/text/FormTextInputSearch.vue";
+import { IconMap } from "../../../../shared/constants/iconMap";
 import render from "../../../render";
 
 /**
@@ -35,30 +36,14 @@ describe("FormTextInputSearch", () => {
       expect(input.getAttribute("id")).toBe("test-search");
     });
 
-    it("renders search button with correct aria-label", async () => {
+    it("renders search icon", async () => {
       await render(FormTextInputSearch, {
         props: defaultProps,
       });
 
-      const searchButton = screen.getByRole("button", {
-        name: "Search button",
-      });
-      expect(searchButton).toBeDefined();
-      expect(searchButton.getAttribute("id")).toBe("test-search-search");
-      expect(searchButton.getAttribute("type")).toBe("button");
-    });
-
-    it("renders search icon in the button", async () => {
-      await render(FormTextInputSearch, {
-        props: defaultProps,
-      });
-
-      const searchButton = screen.getByRole("button", {
-        name: "Search button",
-      });
-      // Icon component is mocked in setup.ts, check for img role.
-      const icon = searchButton.querySelector('[role="img"]');
-      expect(icon).toBeDefined();
+      // Icon component is mocked in setup.ts, check for img role
+      const icon = screen.getByRole("img", { name: IconMap.SEARCH });
+      expect(icon).toBeTruthy();
     });
 
     it("renders with custom label text", async () => {
@@ -67,6 +52,7 @@ describe("FormTextInputSearch", () => {
           ...defaultProps,
           label: "Find Organizations",
         },
+        IconMap,
       });
 
       const input = screen.getByLabelText("Find Organizations");
@@ -257,14 +243,6 @@ describe("FormTextInputSearch", () => {
           ariaLabel: "Search for organizations",
         },
       });
-
-      const searchButton = screen.getByRole("button", {
-        name: "Search for organizations",
-      });
-      expect(searchButton).toBeDefined();
-      expect(searchButton.getAttribute("aria-label")).toBe(
-        "Search for organizations"
-      );
     });
 
     it("input has textbox role", async () => {
@@ -288,19 +266,6 @@ describe("FormTextInputSearch", () => {
       const input = screen.getByLabelText("Search Events");
       expect(input.getAttribute("id")).toBe("search-input");
     });
-
-    it("search button is keyboard accessible", async () => {
-      await render(FormTextInputSearch, {
-        props: defaultProps,
-      });
-
-      const searchButton = screen.getByRole("button", {
-        name: "Search button",
-      });
-      expect(searchButton.getAttribute("type")).toBe("button");
-      // Button should be focusable (not disabled).
-      expect(searchButton.hasAttribute("disabled")).toBe(false);
-    });
   });
 
   describe("Style Coverage", () => {
@@ -315,12 +280,6 @@ describe("FormTextInputSearch", () => {
       // Verify the label positioning for left icon location.
       const container = input.closest(".primary-text");
       expect(container).toBeDefined();
-
-      // Check that icon button is present before input.
-      const searchButton = screen.getByRole("button", {
-        name: "Search button",
-      });
-      expect(searchButton).toBeDefined();
     });
 
     it("displays primary-text styling", async () => {
