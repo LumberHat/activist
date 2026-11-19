@@ -7,14 +7,10 @@
           class="relative flex w-full cursor-default overflow-hidden rounded-lg elem-shadow-sm focus-brand"
         >
           <ComboboxInput
-            @blur="inputFocussed = false"
             @change="query = $event.target.value"
-            @click="inputFocussed = true"
             @focus="handleInputFocus"
-            @keyup.enter="inputFocussed = false"
             :aria-label="t('i18n.components.combobox_topics.filter_by_topic')"
             class="style-cta rounded-lg border py-2 pl-4 selection:bg-highlight dark:selection:bg-white/20"
-            :displayValue="displayValueHandler"
             :placeholder="t('i18n.components.combobox_topics.filter_by_topic')"
           />
           <ComboboxButton
@@ -184,19 +180,6 @@ const filteredTopics = computed(() =>
           .includes(query.value.toLowerCase().replace(/\s+/g, ""))
       )
 );
-
-function displayValue(): string {
-  if (inputFocussed.value) {
-    return "";
-  } else {
-    return t("i18n.components.combobox_topics.filter_by_topic");
-  }
-  return "";
-}
-
-const displayValueHandler = () => {
-  return t(displayValue());
-};
 
 function handleInputFocus(e: Event) {
   // A timeout to make sure the dropdown exist before checking.
