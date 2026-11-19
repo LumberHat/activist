@@ -38,9 +38,11 @@ describe("Shield Basic Rendering", () => {
   });
 
   it("renders with correct default classes", async () => {
-    const { container } = await createWrapper();
+    await createWrapper();
 
-    const wrapper = container.querySelector('[tabindex="0"]') as HTMLElement;
+    // Root element is the parent of the label's wrapping div.
+    const wrapper = screen.getByText("test-label").closest("div")
+      ?.parentElement as HTMLElement;
     const classTokens = wrapper.classList;
 
     // Classes if `active` is true (default).
@@ -74,19 +76,5 @@ describe("Shield Visual & Responsive Styling", () => {
     // If small screen, add class.
     const classTokens = labelWrapper.classList;
     expect(classTokens.contains("max-sm:grow")).toBeTruthy();
-  });
-});
-
-// MARK: Accessibility
-
-describe("Shield Accessibility", () => {
-  it("component is focusable", async () => {
-    const { container } = await createWrapper();
-
-    const wrapper = container.querySelector('[tabindex="0"]') as HTMLElement;
-
-    // It receives focus.
-    await wrapper.focus();
-    expect(document.activeElement).toBe(wrapper);
   });
 });

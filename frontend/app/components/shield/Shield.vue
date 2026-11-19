@@ -8,7 +8,6 @@
       'rounded-full pl-2 pr-3': !isSelector,
       'rounded-lg py-1 pl-4 pr-5 sm:py-0 sm:pl-2 sm:pr-3': isSelector,
     }"
-    tabindex="0"
   >
     <div class="flex items-center" :class="{ 'max-sm:grow': isSelector }">
       <Icon v-if="icon" class="my-1 size-5 shrink-0" :name="icon" size="1em" />
