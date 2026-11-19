@@ -15,6 +15,7 @@
         @click.stop
         as="div"
         class="flex"
+        tabindex="-1"
       >
         <FormTextInput
           :id="inputId ?? id"
